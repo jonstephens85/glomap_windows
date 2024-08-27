@@ -23,6 +23,8 @@ If you use this project for your research, please cite
 
 ## Getting Started
 
+**[Watch this video to learn how to Install and Use GLOMAP](https://youtu.be/QIxXuilEEVw)**
+
 ### Install COLMAP
 _If you have COLMAP already installed and added to path, skip this step._
 
