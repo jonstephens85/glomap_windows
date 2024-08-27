@@ -23,17 +23,16 @@ If you use this project for your research, please cite
 
 ## Getting Started
 
-To build GLOMAP, first install [COLMAP](https://colmap.github.io/install.html#build-from-source)
-dependencies and then build GLOMAP using the following commands: 
-```shell
-mkdir build
-cd build
-cmake .. -GNinja
-ninja && ninja install
-```
+### Install COLMAP
+_If you have COLMAP already installed and added to path, skip this step._
+
+I recommend downloading the COLMAP pre-built binaries [Here](https://github.com/colmap/colmap/releases)
+
+### Install GLOMAP
 Pre-compiled Windows binaries can be downloaded from the official
 [release page](https://github.com/colmap/glomap/releases).
 
+### Standalone Use
 After installation, one can run GLOMAP by (starting from a database)
 ```shell
 glomap mapper --database_path DATABASE_PATH --output_path OUTPUT_PATH --image_path IMAGE_PATH
@@ -42,19 +41,11 @@ For more details on the command line interface, one can type `glomap -h` or `glo
 
 We also provide a guide on improving the obtained reconstruction, which can be found [here](docs/getting_started.md)
 
-Note:
-- GLOMAP depends on two external libraries - [COLMAP](https://github.com/colmap/colmap) and [PoseLib](https://github.com/PoseLib/PoseLib).
-  With the default setting, the library is built automatically by GLOMAP via `FetchContent`.
-  However, if a self-installed version is preferred, one can also disable the `FETCH_COLMAP` and `FETCH_POSELIB` CMake options.
-- To use `FetchContent`, the minimum required version of `cmake` is 3.28. If a self-installed version is used, `cmake` can be downgraded to 3.10.
-- If your system does not provide a recent enough CMake version, you can install it as:
-  ```shell
-  wget https://github.com/Kitware/CMake/releases/download/v3.30.1/cmake-3.30.1.tar.gz
-  tar xfvz cmake-3.30.1.tar.gz && cd cmake-3.30.1
-  ./bootstrap && make -j$(nproc) && sudo make install
-  ```
+## End-to-End Example using Automated Python Scripting
 
-## End-to-End Example
+
+
+## End-to-End Example from Original GLOMAP Project Page
 
 In this section, we will use datasets from [this link](https://demuc.de/colmap/datasets) as examples.
 Download the datasets and put them under `data` folder.
@@ -75,14 +66,14 @@ To obtain a reconstruction from images, the database needs to be established
 first. Here, we utilize the functions from COLMAP:
 ```shell
 colmap feature_extractor \
-    --image_path    ./data/south-building/images \
-    --database_path ./data/south-building/database.db
+    --image_path    ./data/gerrard-hall/images \
+    --database_path ./data/gerrard-hall/database.db \
 colmap exhaustive_matcher \
-    --database_path ./data/south-building/database.db 
+    --database_path ./data/gerrard-hall/database.db \
 glomap mapper \
-    --database_path ./data/south-building/database.db \
-    --image_path    ./data/south-building/images \
-    --output_path   ./output/south-building/sparse
+    --database_path ./data/gerrard-hall/database.db \
+    --image_path    ./data/gerrard-hall/images \
+    --output_path   ./output/gerrard-hall/sparse
 ```
 
 ### Visualize and use the results
@@ -93,7 +84,9 @@ for more details.
 
 The reconstruction can be visualized using the COLMAP GUI, for example:
 ```shell
-colmap gui --import_path ./output/south-building/sparse/0
+colmap gui --import_path ./output/south-building/sparse/0 \
+--image path ./data/gerrard-hall/images \
+--database_path ./data/gerrard-hall/database.db 
 ```
 Alternatives like [rerun.io](https://rerun.io/examples/3d-reconstruction/glomap)
 also enable visualization of COLMAP and GLOMAP outputs.
@@ -101,7 +94,7 @@ also enable visualization of COLMAP and GLOMAP outputs.
 If you want to inspect the reconstruction programmatically, you can use
 `pycolmap` in Python or link against COLMAP's C++ library interface.
 
-### Notes
+### Notes From Original Project Page
 
 - For larger scale datasets, it is recommended to use `sequential_matcher` or
   `vocab_tree_matcher` from `COLMAP`.
