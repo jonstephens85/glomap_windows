@@ -23,6 +23,8 @@ If you use this project for your research, please cite
 
 ## Getting Started
 
+**[Watch this video to learn how to Install and Use GLOMAP](https://youtu.be/QIxXuilEEVw)**
+
 ### Install COLMAP
 _If you have COLMAP already installed and added to path, skip this step._
 
@@ -40,13 +42,42 @@ glomap mapper --database_path DATABASE_PATH --output_path OUTPUT_PATH --image_pa
 For more details on the command line interface, one can type `glomap -h` or `glomap mapper -h` for help.
 
 We also provide a guide on improving the obtained reconstruction, which can be found [here](docs/getting_started.md)
+<br>
+<br>
 
-## End-to-End Example using Automated Python Scripting
 
+## Automated Python Scripting
+In this section I walk you through how to the `run_glomap.py` which automates the manual step for running GLOWMAP. Specifically, I added modifiers to output file structure and format to use with 3DGS and Nerfstudio.
 
+### Accessing run_glowmap.py
+You can either clone this database or manually download the file. **Note: only the python script is maintained on this repository. Clone the original project for the most up to date information**
 
-## End-to-End Example from Original GLOMAP Project Page
+### Usage
+Use run_glowmap.py by passing this command:
+`python run_glowmap.py --image_path path\to\images`
 
+**note: if the image folder is named "images" or "input" you may have some issues with the script. This will be addressed in future updates**
+
+This will run colmap feature_extractor, colmap sequential_matcher, and glowmap mapper sequentially. The data will output in a structure and format immediately usable for the original 3DGS project.
+
+### Modifiers
+<details>
+<summary><span style="font-weight: bold;">Command Line Arguments for run_glowmap.py</span></summary>
+
+  ####  --image_path
+  Path to the source directory of images.
+  #### --matcher_type {sequential_matcher,exhaustive_matcher}
+  Type of matcher to used by COLMAP (default: sequential_matcher).
+  #### --interval {int}
+  Interval of images to use in source image directory. Increase the number to use less images. For example: 2 uses every other image, 6 uses every 6th image. (default: 1)
+  ####  --model_type {3dgs,nerfstudio}
+  Model type to run. '3dgs' includes undistortion, 'nerfstudio' skips undistortion.
+
+</details>
+<br>
+<br>
+
+## Manual GLOWMAP Usage (from original repo)
 In this section, we will use datasets from [this link](https://demuc.de/colmap/datasets) as examples.
 Download the datasets and put them under `data` folder.
 
