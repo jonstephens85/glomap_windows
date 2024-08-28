@@ -5,6 +5,18 @@ import time
 import datetime
 from shutil import copy2, move
 
+def rename_image_folder_if_needed(image_path):
+    # Rename the image_path folder to "source" if it's named "input" or "images"
+    parent_dir = os.path.abspath(os.path.join(image_path, os.pardir))
+    current_folder_name = os.path.basename(os.path.normpath(image_path))
+    
+    if current_folder_name in ["input", "images"]:
+        new_image_path = os.path.join(parent_dir, "source")
+        os.rename(image_path, new_image_path)
+        print(f"Renamed image folder from {current_folder_name} to: {new_image_path}")
+        return new_image_path
+    return image_path
+
 def filter_images(image_path, interval):
     parent_dir = os.path.abspath(os.path.join(image_path, os.pardir))
     input_folder = os.path.join(parent_dir, 'input')
@@ -23,6 +35,9 @@ def filter_images(image_path, interval):
     return image_path
 
 def run_colmap(image_path, matcher_type, interval, model_type):
+    # Rename the image_path folder if needed
+    image_path = rename_image_folder_if_needed(image_path)
+
     parent_dir = os.path.abspath(os.path.join(image_path, os.pardir))
     image_path = filter_images(image_path, interval)
 
