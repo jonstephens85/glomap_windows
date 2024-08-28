@@ -56,6 +56,8 @@ You can either clone this database or manually download the file. **Note: only t
 Use run_glowmap.py by passing this command:
 `python run_glowmap.py --image_path path\to\images`
 
+**note: if the image folder is named "images" or "input" you may have some issues with the script. This will be addressed in future updates**
+
 This will run colmap feature_extractor, colmap sequential_matcher, and glowmap mapper sequentially. The data will output in a structure and format immediately usable for the original 3DGS project.
 
 ### Modifiers
