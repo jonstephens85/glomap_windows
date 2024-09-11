@@ -116,7 +116,7 @@ for more details.
 The reconstruction can be visualized using the COLMAP GUI, for example:
 ```shell
 colmap gui --import_path ./output/south-building/sparse/0 \
---image path ./data/gerrard-hall/images \
+--image_path ./data/gerrard-hall/images \
 --database_path ./data/gerrard-hall/database.db 
 ```
 Alternatives like [rerun.io](https://rerun.io/examples/3d-reconstruction/glomap)
